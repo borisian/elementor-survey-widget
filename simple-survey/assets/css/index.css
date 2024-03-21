@@ -1,0 +1,35 @@
+.survey-answer {
+    margin-bottom: 10px;
+}
+
+.survey-answer-label {
+    display: flex;
+    align-items: center;
+}
+
+.survey-answer-checkbox {
+    margin-right: 10px;
+}
+
+.elementor-survey {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.question-image {
+    max-width: 100%;
+}
+
+/* Arrow */
+.survey-prev-btn {
+    cursor: pointer;
+    font-size: 42px;
+    color: #333;
+    margin-top: 15px;
+    align-self: flex-start;
+}
+
+.survey-prev-btn:hover {
+    color: #666;
+}

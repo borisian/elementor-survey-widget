@@ -102,6 +102,20 @@ function register_survey_widget_controls($widget)
         ]
     );
 
+    // Important Question
+    $questions_repeater->add_control(
+        'is_decisive',
+        [
+            'label' => __('Decisive Question', 'simple-survey'),
+            'type' => \Elementor\Controls_Manager::SWITCHER,
+            'label_on' => __('Yes', 'simple-survey'),
+            'label_off' => __('No', 'simple-survey'),
+            'return_value' => 'yes',
+            'default' => 'no',
+            'description' => __('If marked as decisive, a "Yes" answer to this question will prioritize its redirect URL.', 'simple-survey'),
+        ]
+    );
+
     $widget->add_control(
         'questions_list',
         [
@@ -111,7 +125,6 @@ function register_survey_widget_controls($widget)
             'title_field' => '{{{ question_text }}}',
         ]
     );
-
 
     $widget->end_controls_section();
 

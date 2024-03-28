@@ -37,33 +37,36 @@ class Elementor_Survey_Widget extends \Elementor\Widget_Base
     {
         $settings = $this->get_settings_for_display();
 
-        if (!empty($settings)) {
-            wp_enqueue_script('my-elementor-widget-script');
-        }
-
         echo '<div class="elementor-survey">';
 
         foreach ($settings['questions_list'] as $index => $question) {
             $display_style = $index === 0 ? 'block' : 'none';
             echo '<div class="elementor-survey__question" style="display: ' . $display_style . ';">';
+
+            // Question Image
             if (!empty($question['question_image']['url'])) {
                 echo '<img src="' . esc_url($question['question_image']['url']) . '" alt="" class="question-image">';
             }
+
+            // Question Text
             echo '<h4>' . esc_html($question['question_text']) . '</h4>';
 
-            // Yes/No buttons
+            // Yes/No Buttons with redirect URLs and decisiveness
             $yes_redirect_url = !empty($question['yes_redirect_url']['url']) ? $question['yes_redirect_url']['url'] : '#';
             $no_redirect_url = !empty($question['no_redirect_url']['url']) ? $question['no_redirect_url']['url'] : '#';
-            echo '<button type="button" class="yes-btn" data-index="' . $index . '" data-redirect-url="' . esc_url($yes_redirect_url) . '">Yes</button>';
+            $is_decisive = !empty($question['is_decisive']) && $question['is_decisive'] === 'yes' ? 'yes' : 'no';
+
+            echo '<button type="button" class="yes-btn" data-index="' . $index . '" data-redirect-url="' . esc_url($yes_redirect_url) . '" data-is-decisive="' . $is_decisive . '">Yes</button>';
             echo '<button type="button" class="no-btn" data-redirect-url="' . esc_url($no_redirect_url) . '">No</button>';
 
+            // Previous Button as an elegant arrow
             if ($index > 0) {
-                echo '<div class="survey-prev-btn">&#8592;</div>'; // Using the left arrow character as the "Previous" button
+                echo '<div class="survey-prev-btn">&#8592;</div>';
             }
 
-            echo '</div>';
+            echo '</div>'; // End of .elementor-survey__question
         }
 
-        echo '</div>';
+        echo '</div>'; // End of .elementor-survey
     }
 }

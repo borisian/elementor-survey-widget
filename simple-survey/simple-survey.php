@@ -3,7 +3,7 @@
 /**
  * Plugin Name:      Simple Survey  
  * Description:      Simple Survey Maker for Elementor.
- * Version:          1.1
+ * Version:          1.2
  * Author:           Boris F.
  * Text Domain:      simple-survey
  * Requires Plugins: elementor

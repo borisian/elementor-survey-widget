@@ -1,24 +1,22 @@
 jQuery(document).ready(function ($) {
   let answerCounts = {}; // To keep track of selections for each redirect URL
-  let decisiveUrl = ""; // To store the redirect URL of a decisive question if answered "Yes"
 
   // Common function to handle both Yes and No button clicks
   function handleAnswerButtonClick(button) {
     let redirectUrl = button.data("redirect-url");
-    let isDecisive = button.data("is-decisive"); // Assuming you store decisiveness in a data attribute
+    let isDecisive = button.data("is-decisive") === "yes";
 
-    // If it's a decisive question and the answer is "Yes", store its redirect URL
-    if (isDecisive === "yes" && button.hasClass("yes-btn")) {
-      decisiveUrl = redirectUrl;
+    // If it's a decisive "Yes" answer, redirect immediately
+    if (isDecisive && button.hasClass("yes-btn") && redirectUrl) {
+      window.location.href = redirectUrl;
+      return; // Stop further execution
     }
 
-    // Increment the count for the selected redirect URL
-    if (redirectUrl && !decisiveUrl) {
-      // Only count if no decisive URL is set
+    // Increment the count for the selected redirect URL for non-decisive questions
+    if (redirectUrl) {
       answerCounts[redirectUrl] = (answerCounts[redirectUrl] || 0) + 1;
     }
 
-    // Move to the next question or redirect if this is the last question
     let currentQuestion = button.closest(".elementor-survey__question");
     let nextQuestion = currentQuestion.next(".elementor-survey__question");
 
@@ -26,13 +24,15 @@ jQuery(document).ready(function ($) {
     if (nextQuestion.length) {
       nextQuestion.show(); // Show the next question if it exists
     } else {
-      // Redirect to the decisive URL if set, else decide based on counts
-      window.location.href =
-        decisiveUrl ||
-        Object.keys(answerCounts).reduce(
-          (a, b) => (answerCounts[a] > answerCounts[b] ? a : b),
-          Object.keys(answerCounts)[0] // Default to the first URL if no selections
-        );
+      // Decide on redirection based on the most chosen URL at the end of the survey
+      let mostChosenUrl = Object.keys(answerCounts).reduce(
+        (a, b) => (answerCounts[a] > answerCounts[b] ? a : b),
+        Object.keys(answerCounts)[0] // Default to the first URL if no selections
+      );
+
+      if (mostChosenUrl) {
+        window.location.href = mostChosenUrl; // Redirect to the most chosen URL
+      }
     }
   }
 

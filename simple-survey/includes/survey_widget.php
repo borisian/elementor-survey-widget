@@ -1,4 +1,7 @@
 <?php
+
+// simple-survey/includes/survey_widget.php
+
 include_once plugin_dir_path(__FILE__) . 'widget-controls.php';
 
 if (!defined('ABSPATH')) {
@@ -56,8 +59,8 @@ class Elementor_Survey_Widget extends \Elementor\Widget_Base
             $no_redirect_url = !empty($question['no_redirect_url']['url']) ? $question['no_redirect_url']['url'] : '#';
             $is_decisive = !empty($question['is_decisive']) && $question['is_decisive'] === 'yes' ? 'yes' : 'no';
 
-            echo '<button type="button" class="yes-btn" data-index="' . $index . '" data-redirect-url="' . esc_url($yes_redirect_url) . '" data-is-decisive="' . $is_decisive . '">Yes</button>';
-            echo '<button type="button" class="no-btn" data-redirect-url="' . esc_url($no_redirect_url) . '">No</button>';
+            echo '<button type="button" class="yes-btn" data-index="' . $index . '" data-redirect-url="' . esc_url($yes_redirect_url) . '" data-importance="' . esc_attr($question['yes_answer_importance']) . '">' . esc_html($question['custom_yes_button_text']) . '</button>';
+            echo '<button type="button" class="no-btn" data-redirect-url="' . esc_url($no_redirect_url) . '" data-importance="' . esc_attr($question['no_answer_importance']) . '">' . esc_html($question['custom_no_button_text']) . '</button>';
 
             // Previous Button as an elegant arrow
             if ($index > 0) {

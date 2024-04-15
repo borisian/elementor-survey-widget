@@ -1,9 +1,11 @@
 <?php
 
+// simple-survey/simple-survey.php
+
 /**
  * Plugin Name:      Simple Survey  
  * Description:      Simple Survey Maker for Elementor.
- * Version:          1.2
+ * Version:          1.3
  * Author:           Boris F.
  * Text Domain:      simple-survey
  * Requires Plugins: elementor

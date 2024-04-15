@@ -1,5 +1,7 @@
 <?php
 
+// simple-survey/includes/widget-controls.php
+
 function register_survey_widget_controls($widget)
 {
     // Alignment control for the entire form
@@ -102,19 +104,59 @@ function register_survey_widget_controls($widget)
         ]
     );
 
-    // Important Question
+    // Change Button's text
     $questions_repeater->add_control(
-        'is_decisive',
+        'custom_yes_button_text',
         [
-            'label' => __('Decisive Question', 'simple-survey'),
-            'type' => \Elementor\Controls_Manager::SWITCHER,
-            'label_on' => __('Yes', 'simple-survey'),
-            'label_off' => __('No', 'simple-survey'),
-            'return_value' => 'yes',
-            'default' => 'no',
-            'description' => __('If marked as decisive, a "Yes" answer to this question will prioritize its redirect URL.', 'simple-survey'),
+            'label' => __('Custom Yes Button Text', 'simple-survey'),
+            'type' => \Elementor\Controls_Manager::TEXT,
+            'default' => __('Yes', 'simple-survey'),
+            'label_block' => true,
         ]
     );
+
+    $questions_repeater->add_control(
+        'custom_no_button_text',
+        [
+            'label' => __('Custom No Button Text', 'simple-survey'),
+            'type' => \Elementor\Controls_Manager::TEXT,
+            'default' => __('No', 'simple-survey'),
+            'label_block' => true,
+        ]
+    );
+
+    // Important Question
+    $questions_repeater->add_control(
+        'yes_answer_importance',
+        [
+            'label' => __('Yes Answer Importance', 'simple-survey'),
+            'type' => \Elementor\Controls_Manager::SELECT,
+            'options' => [
+                'positive' => __('Positive +5', 'simple-survey'),
+                'negative' => __('Negative -5', 'simple-survey'),
+                'neutral' => __('Neutral +1', 'simple-survey')
+            ],
+            'default' => 'neutral',
+            'description' => __('Set the importance for the "Yes" answer.', 'simple-survey'),
+        ]
+    );
+
+    $questions_repeater->add_control(
+        'no_answer_importance',
+        [
+            'label' => __('No Answer Importance', 'simple-survey'),
+            'type' => \Elementor\Controls_Manager::SELECT,
+            'options' => [
+                'positive' => __('Positive +5', 'simple-survey'),
+                'negative' => __('Negative -5', 'simple-survey'),
+                'neutral' => __('Neutral +1', 'simple-survey')
+            ],
+            'default' => 'neutral',
+            'description' => __('Set the importance for the "No" answer.', 'simple-survey'),
+        ]
+    );
+
+
 
     $widget->add_control(
         'questions_list',

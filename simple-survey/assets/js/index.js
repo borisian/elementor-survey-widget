@@ -1,20 +1,29 @@
+// simple-survey/assets/js/index.js
+
 jQuery(document).ready(function ($) {
   let answerCounts = {}; // To keep track of selections for each redirect URL
 
   // Common function to handle both Yes and No button clicks
   function handleAnswerButtonClick(button) {
     let redirectUrl = button.data("redirect-url");
-    let isDecisive = button.data("is-decisive") === "yes";
+    let importance = button.data("importance");
+    let score = 1; // Default neutral score
 
-    // If it's a decisive "Yes" answer, redirect immediately
-    if (isDecisive && button.hasClass("yes-btn") && redirectUrl) {
-      window.location.href = redirectUrl;
-      return; // Stop further execution
+    switch (importance) {
+      case "positive":
+        score = 5;
+        break;
+      case "negative":  
+        score = -5;
+        break;
+      case "neutral":
+        score = 1;
+        break;
     }
 
-    // Increment the count for the selected redirect URL for non-decisive questions
+    // Update the score for the redirect URL
     if (redirectUrl) {
-      answerCounts[redirectUrl] = (answerCounts[redirectUrl] || 0) + 1;
+      answerCounts[redirectUrl] = (answerCounts[redirectUrl] || 0) + score;
     }
 
     let currentQuestion = button.closest(".elementor-survey__question");

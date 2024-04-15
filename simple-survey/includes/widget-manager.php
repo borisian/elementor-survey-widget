@@ -1,4 +1,7 @@
 <?php
+
+// simple-survey/includes/widget-manager.php
+
 if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly.
 }
